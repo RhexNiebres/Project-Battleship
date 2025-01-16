@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const hit = playerBoard.receiveAttack(x, y);
 
     const cell = document.querySelector(
-      #player-board .cell[data-row="${x}"][data-col="${y}"]
+      `#player-board .cell[data-row="${x}"][data-col="${y}"]`
     );
 
     if (hit) {
@@ -104,4 +104,4 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Computer wins!");
     }
   }
-});  
+});
