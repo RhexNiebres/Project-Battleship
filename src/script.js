@@ -20,38 +20,63 @@ document.addEventListener("DOMContentLoaded", () => {
   const computer = new ComputerPlayer("Computer");
   computer.gameboard = computerBoard;
 
- 
-const game = new Game("Player", "Computer");
+  const game = new Game("Player", "Computer");
 
+  // Render the boards
+  renderBoard(playerBoard, 'player-board', false);
+  renderBoard(computerBoard, 'computer-board', true);
 
-renderBoard(playerBoard, 'player-board', false);
-renderBoard(computerBoard, 'computer-board', true);
-             
-const computerBoardElement = document.getElementById('computer-board');
-computerBoardElement.addEventListener('click', (event) => {
-  const cell = event.target;
+  // Add click functionality to the computer's board
+  const computerBoardElement = document.getElementById('computer-board');
+  computerBoardElement.addEventListener('click', (event) => {
+    const cell = event.target;
 
-  if (cell.classList.contains('cell')) {
-    const x = parseInt(cell.dataset.row, 10);
-    const y = parseInt(cell.dataset.col, 10);
+    if (cell.classList.contains('cell')) {
+      const x = parseInt(cell.dataset.row, 10);
+      const y = parseInt(cell.dataset.col, 10);
 
-    // Process player's attack
-    const hit = computerBoard.receiveAttack(x, y);
-    if (hit) {
-      cell.classList.add('hit');
-    } else {
-      cell.classList.add('missed');
+      // Process player's attack
+      const hit = computerBoard.receiveAttack(x, y);
+      if (hit) {
+        cell.classList.add('hit');
+      } else {
+        cell.classList.add('missed');
+      }
+
+      // Check if computer has lost all ships
+      if (computerBoard.allShipsSunk()) {
+        alert("You win!");
+        return;
+      }
+
+      // Computer's turn
+      computerAttack(playerBoard);
     }
+  });
 
-    // Check if computer has lost all ships
-    if (computerBoard.allShipsSunk()) {
-      alert("You win!");
-      return;
+  function renderBoard(gameboard, boardId, hideShips = false) {
+    const container = document.getElementById(boardId);
+    container.innerHTML = ""; // Clear any existing content in the board
+  
+    // Iterate through rows and columns of the gameboard
+    for (let row = 0; row < gameboard.board.length; row++) {
+      for (let col = 0; col < gameboard.board[row].length; col++) {
+        const cell = document.createElement("div");
+        cell.classList.add("cell");
+        cell.dataset.row = row;
+        cell.dataset.col = col;
+  
+        // If a ship is present and ships are not hidden, mark it
+        if (gameboard.board[row][col] && !hideShips) {
+          cell.classList.add("ship");
+        }
+  
+        // Attach the cell to the container
+        container.appendChild(cell);
+      }
     }
-
-    // Computer's turn
-    computerAttack(playerBoard);
   }
+  
 
   function computerAttack(playerBoard) {
     let x, y;
@@ -66,7 +91,7 @@ computerBoardElement.addEventListener('click', (event) => {
     const hit = playerBoard.receiveAttack(x, y);
 
     const cell = document.querySelector(
-      `#player-board .cell[data-row="${x}"][data-col="${y}"]`
+      #player-board .cell[data-row="${x}"][data-col="${y}"]
     );
 
     if (hit) {
@@ -79,33 +104,4 @@ computerBoardElement.addEventListener('click', (event) => {
       alert("Computer wins!");
     }
   }
-
-  // Commit message: "Implement computer's attack logic"
-  function computerAttack(playerBoard) {
-    let x, y;
-    do {
-      x = Math.floor(Math.random() * 10);
-      y = Math.floor(Math.random() * 10);
-    } while (
-      playerBoard.board[x][y] === "missed" ||
-      playerBoard.board[x][y] === "hit"
-    );
-
-    const hit = playerBoard.receiveAttack(x, y);
-
-    const cell = document.querySelector(
-      `#player-board .cell[data-row="${x}"][data-col="${y}"]`
-    );
-
-    if (hit) {
-      cell.classList.add("hit");
-    } else {
-      cell.classList.add("missed");
-    }
-
-    if (playerBoard.allShipsSunk()) {
-      alert("Computer wins!");
-    }
-  }
-}
-});
+});  
