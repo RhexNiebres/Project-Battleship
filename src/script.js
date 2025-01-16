@@ -1,4 +1,3 @@
-// Commit message: "Set up initial gameboards and place ships"
 import Ship from './ship.js';
 import Gameboard from './gameboard.js';
 import { Player, ComputerPlayer } from './player.js';
@@ -14,3 +13,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   playerBoard.placeShip(playerShip, [0, 0]);
   computerBoard.placeShip(computerShip, [5, 5]);
+
+  // Commit message: "Initialize players and assign their gameboards"
+  const player = new Player("Player");
+  player.gameboard = playerBoard;
+
+  const computer = new ComputerPlayer("Computer");
+  computer.gameboard = computerBoard;
+
