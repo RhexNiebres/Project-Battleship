@@ -80,4 +80,32 @@ computerBoardElement.addEventListener('click', (event) => {
     }
   }
 
+  // Commit message: "Implement computer's attack logic"
+  function computerAttack(playerBoard) {
+    let x, y;
+    do {
+      x = Math.floor(Math.random() * 10);
+      y = Math.floor(Math.random() * 10);
+    } while (
+      playerBoard.board[x][y] === "missed" ||
+      playerBoard.board[x][y] === "hit"
+    );
+
+    const hit = playerBoard.receiveAttack(x, y);
+
+    const cell = document.querySelector(
+      `#player-board .cell[data-row="${x}"][data-col="${y}"]`
+    );
+
+    if (hit) {
+      cell.classList.add("hit");
+    } else {
+      cell.classList.add("missed");
+    }
+
+    if (playerBoard.allShipsSunk()) {
+      alert("Computer wins!");
+    }
+  }
+}
 });
