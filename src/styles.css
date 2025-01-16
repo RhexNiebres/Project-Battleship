@@ -1,15 +1,100 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    margin: 0;
+}
+
+#game-container {
+    text-align: center;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(10, 50px);   
+    grid-gap: 1px;                            
+    margin: 20px 0;
+}
+
+.cell {
+    width: 50px;
+    height: 50px;
+    background-color: #ddd;
+    border: 1px solid #aaa;
+    display: flex;                           
+    justify-content: center;             
+    align-items: center;                
+    cursor: pointer;                        
+    transition: background-color 0.3s;     
+}
+
+.cell:hover {
+    background-color: #ccc;  
+}
+
+
+.ship {
+    background-color: #333;  
+}
+
+
+.missed {
+    background-color: lightblue;  
+}
+
+
+.hit {
+    background-color: #e63946;  
+    color: white;               
+    font-weight: bold;          
+    font-size: 1.2em;           
+}
+
+
+.status {
+    margin-top: 15px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #555;
+}
+
+
+button {
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background-color: #0056b3;  
+    transform: scale(1.05);     
+}
+
+button:active {
+    background-color: #004494;  
+    transform: scale(1);        
 }
 
 h1 {
+    font-size: 2em;
     color: #333;
+    margin-bottom: 10px;
 }
 
-#app {
-    padding: 20px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+#player-board,
+#computer-board {
+    margin: 0 20px;
+    vertical-align: top;
+}
+
+.hidden {
+    visibility: hidden;  
 }
